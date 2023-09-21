@@ -15,12 +15,14 @@ class Loading {
   }
 
   show() {
+    console.log("show loading");
     this.setState({
       show: true
     });
   }
 
   hide() {
+    console.log("hide loading");
     this.setState({
       show: false
     });

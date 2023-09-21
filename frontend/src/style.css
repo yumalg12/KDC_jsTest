@@ -63,6 +63,24 @@ body * {
   padding: 10px 15px;
 }
 
+/* 랜덤 버튼 */
+.SearchInputWrapper {
+  display: grid;
+  grid-template-columns: 1fr 12rem;
+  gap: 5px;
+}
+
+.RandomButton {
+  background-color: rgb(150 150 150 / 70%);
+  color: white;
+  border: 1px solid rgb(150 150 150 / 90%);;
+  cursor: pointer;
+}
+
+.RandomButton:hover{
+  background-color: rgb(150 150 150 / 50%);
+}
+
 .ImageInfo {
   position: fixed;
   left: 0;
@@ -118,18 +136,28 @@ body * {
 }
 
 /* dark mode 토글 */
-input[type="checkbox"] {
+.DarkModeToggle::before {
+  content: "Dark Mode";
+  color: var(--textColor);
+  margin-left: -4.5rem;
+  font-size: 1rem;
+  position: relative;
+  bottom: 0.1rem;
+}
+
+input[type="checkbox"].DarkModeToggle {
   height: 1.6em;
   appearance: none;
   background-repeat: no-repeat;
   border: 2px solid rgba(0, 0, 0, 0.25);
   width: 3em;
+  margin-left: 4.5rem;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(0, 0, 0, 0.25)'/%3e%3c/svg%3e");
   border-radius: 2em;
   transition: background-position .15s ease-in-out;
 }
 
-input[type="checkbox"]:checked {
+input[type="checkbox"]:checked.DarkModeToggle {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23000'/%3e%3c/svg%3e");
     background-color: rgba(255, 255, 255, 0.75);
     border-color: rgba(255, 255, 255, 0.75);

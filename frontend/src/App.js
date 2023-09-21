@@ -21,12 +21,18 @@ class App {
       $target,
       onSearch: keyword => {
         this.Loading.show();
-        console.log("show loading"); // show loading
         api.fetchCats(keyword).then(({ data }) => {
           this.setState(data);
           this.Loading.hide();
-          console.log("hide loading"); // hide loading
         });
+      },
+      onRandomSearch: () => {
+        this.Loading.show();
+        console.log("random clicked");
+        api.fetchRandomCats().then(({ data }) => {
+          this.setState(data);
+          this.Loading.hide();
+        })
       }
     });
 
