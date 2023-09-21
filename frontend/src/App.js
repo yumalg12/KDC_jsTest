@@ -7,6 +7,10 @@ class App {
   constructor($target) {
     this.$target = $target;
 
+    this.Loading = new Loading({
+      $target,
+    });
+
     this.DarkModeToggle = new DarkModeToggle({
       $target,
       onClick: keyword => {
@@ -16,7 +20,13 @@ class App {
     this.searchInput = new SearchInput({
       $target,
       onSearch: keyword => {
-        api.fetchCats(keyword).then(({ data }) => this.setState(data));
+        this.Loading.show();
+        console.log("show loading"); // show loading
+        api.fetchCats(keyword).then(({ data }) => {
+          this.setState(data);
+          this.Loading.hide();
+          console.log("hide loading"); // hide loading
+        });
       }
     });
 

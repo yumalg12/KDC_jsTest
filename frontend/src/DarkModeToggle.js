@@ -8,8 +8,8 @@ class DarkModeToggle {
     this.$DarkModeToggle.type = "checkbox";
 
     $DarkModeToggle.className = "DarkModeToggle";
-    $target.appendChild($wrapper);
     $wrapper.appendChild($DarkModeToggle);
+    $target.appendChild($wrapper);
 
     $DarkModeToggle.addEventListener("change", e => {
       this.setColorMode(e.target.checked);

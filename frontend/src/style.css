@@ -16,13 +16,6 @@ body{
   color: var(--textColor);
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000;
-    color: white;
-  }
-}
-
 html {
   box-sizing: border-box;
 }
@@ -143,3 +136,31 @@ input[type="checkbox"]:checked {
     background-position: right center;
 }
 
+/* 로딩창 */
+.Loading {
+    background-color: rgb(150 150 150 / 70%);
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+  }
+
+.Loading p {
+  font-size: 3rem;
+  color: white;
+  font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  animation: 5s linear 0s infinite loadingcolor;
+}
+
+@keyframes loadingcolor {
+  0% {color: white;}
+  33%{color: black;}
+  66%{color: white;}
+}
