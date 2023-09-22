@@ -9,6 +9,9 @@ class SearchInput {
     const $searchInput = document.createElement("input");
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = "고양이를 검색해보세요.|";
+    if (localStorage.getItem('lastResult')){
+      this.$searchInput.value = localStorage.getItem('history').split(',')[0];
+    }
     this.$searchInput.autofocus = true;
 
     $searchInput.className = "SearchInput";
@@ -17,6 +20,7 @@ class SearchInput {
     $searchInput.addEventListener("keyup", e => {
       if (e.key === 'Enter') {
         onSearch(e.target.value);
+        this.KeywordHistory.addKeyword(e.target.value);
       }
     });
 
@@ -36,6 +40,7 @@ class SearchInput {
       $target,
       onSearch,
     });
+
   }
 
   render() {}

@@ -15,17 +15,33 @@ class KeywordHistory {
         this.$keywordHistory = $keywordHistory;
         this.$keywordHistory.className = 'keywordHistory';
         $wrapper.appendChild(this.$keywordHistory);
-        
-        this.data = [
-            '고양이',
-            '샴',
-            '페르시안'
-        ];
-        
+
         this.onSearch = onSearch;
 
+        this.init();
         this.render();
     }
+
+    init() {
+        const data = this.getHistory();
+        this.setState(data);
+    }
+
+    addKeyword(keyword) {
+        let historyArr = this.getHistory();
+        historyArr.unshift(keyword);
+        localStorage.setItem('history', [...(historyArr.slice(0,5))]);
+        this.init();
+    } 
+
+    getHistory() {
+        return localStorage.getItem('history') === null? []: localStorage.getItem('history').split(',');
+    }
+        
+    setState(nextData) {
+        this.data = nextData;
+        this.render();
+    } 
 
     render() {
         this.$keywordHistory.innerHTML = this.data.map(
@@ -35,6 +51,7 @@ class KeywordHistory {
         this.$keywordHistory.querySelectorAll('li button').forEach(($item, idx) => {
             $item.addEventListener('click', () => {
                 this.onSearch(this.data[idx]);
+                this.addKeyword(this.data[idx]);
             })
         });
     };

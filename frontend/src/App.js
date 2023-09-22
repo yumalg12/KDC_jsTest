@@ -19,6 +19,7 @@ class App {
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
           this.setState(data);
+          this.saveResult(data);
           this.Loading.hide();
         });
       },
@@ -51,10 +52,22 @@ class App {
         image: null
       }
     });
+
+    this.init();
   }
 
   setState(nextData) {
     this.data = nextData;
     this.searchResult.setState(nextData);
+  }
+
+  saveResult(data) {
+    console.log(data);
+    localStorage.setItem('lastResult', JSON.stringify(data));
+  }
+
+  init() {
+    const lastResult = localStorage.getItem('lastResult') === null? []: JSON.parse(localStorage.getItem('lastResult'));
+    this.setState(lastResult);
   }
 }

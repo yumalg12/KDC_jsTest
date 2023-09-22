@@ -38,8 +38,10 @@ class Loading {
       this.$loading.innerHTML = `
       <div class="Loading"><p>Loading...</p></div>
       `;
+      this.$loading.parentNode.parentNode.style.overflow = 'hidden';
     } else {
       this.$loading.innerHTML = ``;
+      this.$loading.parentNode.parentNode.style.overflow = '';
     }
   }
 }
