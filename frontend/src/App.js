@@ -28,7 +28,6 @@ class App {
       },
       onRandomSearch: () => {
         this.Loading.show();
-        console.log("random clicked");
         api.fetchRandomCats().then(({ data }) => {
           this.setState(data);
           this.Loading.hide();
@@ -39,10 +38,10 @@ class App {
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
-      onClick: image => {
-        this.imageInfo.setState({
+      onClick: cat => {
+        this.imageInfo.showDetail({
           visible: true,
-          image
+          cat
         });
       }
     });
@@ -57,7 +56,6 @@ class App {
   }
 
   setState(nextData) {
-    console.log(this);
     this.data = nextData;
     this.searchResult.setState(nextData);
   }

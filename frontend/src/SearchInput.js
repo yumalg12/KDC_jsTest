@@ -31,8 +31,6 @@ class SearchInput {
     $randomButton.addEventListener("click", e => {
       onRandomSearch();
     });
-
-    console.log("SearchInput created.", this);
   }
 
   render() {}
