@@ -15,7 +15,7 @@ class SearchInput {
     $wrapper.appendChild($searchInput);
 
     $searchInput.addEventListener("keyup", e => {
-      if (e.keyCode === 13) {
+      if (e.key === 'Enter') {
         onSearch(e.target.value);
       }
     });
@@ -30,6 +30,11 @@ class SearchInput {
 
     $randomButton.addEventListener("click", e => {
       onRandomSearch();
+    });
+
+    this.KeywordHistory = new KeywordHistory({ 
+      $target,
+      onSearch,
     });
   }
 

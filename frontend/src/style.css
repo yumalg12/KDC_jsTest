@@ -73,6 +73,7 @@ body * {
   display: grid;
   grid-template-columns: 1fr 12rem;
   gap: 5px;
+  margin: 10px 0;
 }
 
 .RandomButton {
@@ -95,6 +96,11 @@ body * {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+
+/* 모달 */
+.close{
+  cursor: pointer;
+}
 .ImageInfo .title {
   display: flex;
   justify-content: space-between;
@@ -144,19 +150,19 @@ body * {
 .DarkModeToggle::before {
   content: "Dark Mode";
   color: var(--textColor);
-  margin-left: -4.5rem;
-  font-size: 1rem;
+  margin-left: -5rem;
+  font-size: 1.2rem;
   position: relative;
   bottom: 0.1rem;
 }
 
 input[type="checkbox"].DarkModeToggle {
-  height: 1.6em;
+  height: 2em;
   appearance: none;
   background-repeat: no-repeat;
   border: 2px solid rgba(0, 0, 0, 0.25);
-  width: 3em;
-  margin-left: 4.5rem;
+  width: 3.6em;
+  margin-left: 5rem;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(0, 0, 0, 0.25)'/%3e%3c/svg%3e");
   border-radius: 2em;
   transition: background-position .15s ease-in-out;
@@ -198,6 +204,27 @@ input[type="checkbox"]:checked.DarkModeToggle {
   66%{color: white;}
 }
 
-.close{
+/* 최근 검색어 */
+.KeywordHistoryWrapper label {
+  font-size: 1.2rem;
+  margin: 0 10px 0 5px;
+  font-weight: bold;
+}
+ul.keywordHistory{
+  margin: 0;
+  display: inline-flex;
+  gap: 5px;
+  list-style: none;
+  padding: 0;
+}
+
+.keywordHistory li>button {
+  padding: 5px 10px;
+  border: 1px solid rgb(150 150 150 / 70%);
   cursor: pointer;
+  border-radius: 10px;
+}
+
+.keywordHistory li>button:hover {
+  filter: opacity(80%);
 }

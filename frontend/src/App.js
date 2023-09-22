@@ -7,14 +7,10 @@ class App {
   constructor($target) {
     this.$target = $target;
 
-    this.Loading = new Loading({
-      $target,
-    });
+    this.Loading = new Loading({ $target });
 
     this.DarkModeToggle = new DarkModeToggle({
-      $target,
-      onClick: keyword => {
-      }
+      $target
     });
 
     this.searchInput = new SearchInput({
@@ -39,10 +35,12 @@ class App {
       $target,
       initialData: this.data,
       onClick: cat => {
+        this.Loading.show();
         this.imageInfo.showDetail({
           visible: true,
           cat
         });
+        this.Loading.hide(); //수정 필요
       }
     });
 
