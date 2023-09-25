@@ -9,6 +9,7 @@ class ImageInfo {
     $target.appendChild($imageInfo);
 
     this.data = data;
+    this.Loading = new Loading({ $target });
 
     this.render();
   }
@@ -19,11 +20,13 @@ class ImageInfo {
   }
 
   showDetail(data) {
+    this.Loading.show();
     api.fetchCatDetail(data.cat.id).then(({data}) => {
       this.setState({
         visible: true,
         cat: data
       });
+      this.Loading.hide();
     })
   }
 

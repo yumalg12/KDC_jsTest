@@ -179,7 +179,7 @@ input[type="checkbox"]:checked.DarkModeToggle {
 .Loading {
     background-color: rgb(150 150 150 / 70%);
     overflow: hidden;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
