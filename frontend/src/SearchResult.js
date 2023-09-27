@@ -24,33 +24,26 @@ class SearchResult {
     this.render();
   }
 
-  // 리팩토링 예정
-  isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-      rect.top >= 0 
-      && rect.left >= 0 
-      && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-      && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-  }
-
-  applyEventToElement = (items) => {
-    document.addEventListener('scroll', () => {
-      items.forEach((item, idx) => {
-        if (this.isElementInViewport(item) && (items.length - 1 === idx)) {
+  listObserver = new IntersectionObserver((items, observer) => {
+    items.forEach(item => {
+      if (item.isIntersecting) { // 아이템이 화면에 보일 때
+        item.target.querySelector('img').src = item.target.querySelector('img').dataset.src; // 이미지를 로드한다.
+        let dataIndex = Number(item.target.dataset.index); // 요소의 index를 알아내서
+        if (dataIndex + 1 === this.data.length) { // 마지막 요소라면? nextPage 호출
+          console.log('nextpage');
           this.onNextPage();
         }
-      })
-    })
-  }
+      }
+    });
+  });
 
   render() {
     this.$searchResult.innerHTML = this.data
       .map(
-        cat => `
-          <li class="item">
-            <img src=${cat.url} alt=${cat.name} />
+        (cat, i) => `
+          <li class="item" data-index=${i}>
+            <img src="https://via.placeholder.com/200x300"
+            data-src=${cat.url} alt=${cat.name} />
           </li>
         `
       )
@@ -60,9 +53,8 @@ class SearchResult {
       $item.addEventListener("click", () => {
         this.onClick(this.data[index]);
       });
+      
+      this.listObserver.observe($item);
     });
-
-    let listItems = this.$searchResult.querySelectorAll('.item');
-    this.applyEventToElement(listItems);
-  }
+    }
 }
