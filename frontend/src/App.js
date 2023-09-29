@@ -19,7 +19,7 @@ class App {
       onSearch: keyword => {
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data);
+          this.setState(data? data: []);
           this.saveResult(data);
           this.Loading.hide();
         });
