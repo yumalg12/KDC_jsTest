@@ -19,15 +19,30 @@ class SearchInput {
     $searchInput.className = "SearchInput";
     $wrapper.appendChild($searchInput);
 
-    $searchInput.addEventListener("keyup", e => {
-      if (e.key === 'Enter') {
-        onSearch(e.target.value);
+    $searchInput.addEventListener("keypress", e => {
+      if (e.key === 'Enter' && e.target.value.length != 0) {
+        onSearch(e.target.value, this.$limitCount.value);
         this.KeywordHistory.addKeyword(e.target.value);
       }
     });
 
     $searchInput.addEventListener("click", e => e.target.value = "");
 
+    // 개수 선택박스
+    const $limitCount = document.createElement('select');
+    this.$limitCount = $limitCount;
+    this.$limitCount.classList = 'limitCount';
+
+    const limitCountOptions = [10, 25, 50];
+    limitCountOptions.forEach(e => {
+      let $option = document.createElement('option');
+      $option.value = e;
+      $option.textContent = `${e}개`;
+      $limitCount.appendChild($option);
+    });
+    $wrapper.appendChild($limitCount);
+
+    // 랜덤
     const $randomButton = document.createElement("button");
     this.$randomButton = $randomButton;
     this.$randomButton.textContent = "랜덤😺";

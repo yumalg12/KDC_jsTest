@@ -61,6 +61,27 @@ body * {
   display: inline-block;
   margin: 0 0 1em;
   width: 100%;
+  position: relative;
+}
+
+.SearchResult .item .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background: rgba(0,0,0,.3);
+  padding: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+  transition: all 1s ease;
+  word-break: keep-all;
+}
+
+.SearchResult .item:hover .content {
+  opacity: 1;
 }
 
 .SearchInput {
@@ -72,25 +93,31 @@ body * {
 /* 랜덤 버튼 */
 .SearchInputSection {
   display: grid;
-  grid-template-columns: 1fr 12rem;
+  grid-template-columns: 4fr 1fr 1fr;
   gap: 5px;
   margin: 10px 0;
+  position: relative;
 }
 
 .SearchInputSection .KeywordHistoryWrapper {
   display: none;
   position: absolute;
-  width: calc(100% - 1rem);
+  width: 100%;
   background: var(--background);
   box-shadow: 0 15px 15px -7px #00000050;
-  top: 9rem;
+  top: calc(5rem - 3px);
   padding: 1rem;
   border: 1px solid var(--textColor);
   border-top: none;
+  z-index: 1;
 }
 
 .SearchInputSection:hover .KeywordHistoryWrapper{
   display: block;
+}
+
+.SearchInputSection .limitCount {
+  font-size: 40px;
 }
 
 .RandomButton {
