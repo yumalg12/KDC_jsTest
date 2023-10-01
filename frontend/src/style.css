@@ -70,11 +70,27 @@ body * {
 }
 
 /* 랜덤 버튼 */
-.SearchInputWrapper {
+.SearchInputSection {
   display: grid;
   grid-template-columns: 1fr 12rem;
   gap: 5px;
   margin: 10px 0;
+}
+
+.SearchInputSection .KeywordHistoryWrapper {
+  display: none;
+  position: absolute;
+  width: calc(100% - 1rem);
+  background: var(--background);
+  box-shadow: 0 15px 15px -7px #00000050;
+  top: 9rem;
+  padding: 1rem;
+  border: 1px solid var(--textColor);
+  border-top: none;
+}
+
+.SearchInputSection:hover .KeywordHistoryWrapper{
+  display: block;
 }
 
 .RandomButton {
@@ -92,6 +108,14 @@ body * {
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.ImageInfo.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 
