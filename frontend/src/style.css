@@ -105,11 +105,11 @@ body * {
   width: 100%;
   background: var(--background);
   box-shadow: 0 15px 15px -7px #00000050;
-  top: calc(5rem - 3px);
+  top: 100%;
   padding: 1rem;
   border: 1px solid var(--textColor);
   border-top: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .SearchInputSection:hover .KeywordHistoryWrapper{
@@ -286,4 +286,57 @@ ul.keywordHistory{
 
 .keywordHistory li>button:hover {
   filter: opacity(80%);
+}
+
+/* 배너 부분 */
+.Banner {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.Banner ul {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transition: all .3s ease;
+}
+
+.Banner ul li {
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 300px;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.Banner button {
+  position: absolute;
+  top: 45%;
+  z-index: 1;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-size: 1.5rem;
+  filter: opacity(0.8);
+  color: white;
+  cursor: pointer;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.Banner button:hover {
+  filter: opacity(1.0);
+}
+
+.Banner .prev {
+  left: 10px;
+}
+
+.Banner .next {
+  right: 10px;
 }
