@@ -46,18 +46,22 @@ class KeywordHistory {
         this.render();
     } 
 
-    render() {
-        this.$keywordHistory.innerHTML = this.data.map(
-            keyword => `<li><button>${keyword}</button></li>`
-        ).join('');
-
+    bindEvent() {
         this.$keywordHistory.querySelectorAll('li button').forEach(($item, idx) => {
             $item.addEventListener('click', () => {
                 this.onSearch(this.data[idx]);
                 this.addKeyword(this.data[idx]);
-            })
+            });
         });
     };
+    
+    render() {
+        this.$keywordHistory.innerHTML = this.data.map(
+            keyword => `<li><button>${keyword}</button></li>`
+            ).join('');
+        
+        this.bindEvent();
+    }
 };
 
 export default KeywordHistory;

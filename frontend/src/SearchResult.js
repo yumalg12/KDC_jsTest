@@ -12,7 +12,7 @@ class SearchResult {
     $wrapper.appendChild(this.$searchResult);
     $target.appendChild($wrapper);
 
-    this.data = initialData;
+    this.data = initialData.items;
     this.onClick = onClick;
     this.onNextPage = onNextPage;
 
@@ -38,6 +38,7 @@ class SearchResult {
   });
 
   render() {
+    console.log(this.data);
     this.$searchResult.innerHTML = this.data
       .map(
         (cat, i) => `

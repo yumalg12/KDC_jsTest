@@ -22,15 +22,17 @@ class ImageInfo {
     this.render();
   }
 
-  showDetail(data) {
+  async showDetail(data) {
     this.Loading.show();
-    api.fetchCatDetail(data.cat.id).then(({data}) => {
+    const detailInfo = await api.fetchCatDetail(data.cat.id);
+
+    if (detailInfo) {
       this.setState({
         visible: true,
-        cat: data
+        cat: detailInfo.data
       });
       this.Loading.hide();
-    })
+    }
   }
 
   closeImageInfo() {

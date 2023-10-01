@@ -19,8 +19,7 @@ class DarkModeToggle {
   }
 
   initColorMode() {
-    // 초기화
-    // isDarkMode state, checkbox의 상태, html의 attribute
+    // 초기화: isDarkMode state, checkbox의 상태, html의 attribute
     this.isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     this.$DarkModeToggle.checked = this.isDarkMode;
     this.setColorMode(this.isDarkMode);

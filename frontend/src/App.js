@@ -9,8 +9,11 @@ import api from './api.js';
 
 class App {
   $target = null;
-  data = [];
-  page = 1;
+  DEFAULT_PAGE = 1;
+  data = {
+    items: [],
+    page: this.DEFAULT_PAGE
+  }
 
   constructor($target) {
     this.$target = $target;
@@ -26,7 +29,10 @@ class App {
       onSearch: keyword => {
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data? data: []);
+          this.setState({
+            items: data? data: [],
+            page: this.DEFAULT_PAGE
+          });
           this.saveResult(data);
           this.Loading.hide();
         });
@@ -34,7 +40,10 @@ class App {
       onRandomSearch: () => {
         this.Loading.show();
         api.fetchRandomCats().then(({ data }) => {
-          this.setState(data);
+          this.setState({
+            items: data? data: [],
+            page: this.DEFAULT_PAGE
+          });
           this.Loading.hide();
         })
       }
@@ -50,16 +59,16 @@ class App {
         });
       },
       onNextPage: () => {
-        console.log("next page");
         this.Loading.show();
          
         const lastKeyword = localStorage.getItem('history') === null? '': localStorage.getItem('history').split(',')[0];
         const page = this.page + 1;
         api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
           let newData = this.data.concat(data);
-          this.setState(newData);
-          this.page = page;
-          
+          this.setState({
+            items: newData,
+            page: page
+          });
           this.Loading.hide();
         });
       }
@@ -78,17 +87,19 @@ class App {
 
   setState(nextData) {
     this.data = nextData;
-    this.searchResult.setState(nextData);
+    this.searchResult.setState(nextData.items);
   }
 
   saveResult(data) {
-    console.log(data);
     localStorage.setItem('lastResult', JSON.stringify(data));
   }
 
   init() {
     const lastResult = localStorage.getItem('lastResult') === null? []: JSON.parse(localStorage.getItem('lastResult'));
-    this.setState(lastResult);
+    this.setState({
+      items: lastResult,
+      page: this.DEFAULT_PAGE
+    });
   }
 }
 
