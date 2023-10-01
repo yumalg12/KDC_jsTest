@@ -1,3 +1,5 @@
+import Empty from "./Empty.js";
+
 class SearchResult {
   $searchResult = null;
   data = null;
@@ -12,9 +14,13 @@ class SearchResult {
     $wrapper.appendChild(this.$searchResult);
     $target.appendChild($wrapper);
 
-    this.data = initialData.items;
+    this.data = initialData;
     this.onClick = onClick;
     this.onNextPage = onNextPage;
+
+    this.Empty = new Empty({
+      $target: $wrapper
+    });
 
     this.render();
   }
@@ -22,6 +28,7 @@ class SearchResult {
   setState(nextData) {
     this.data = nextData;
     this.render();
+    this.Empty.show(nextData);
   }
 
   listObserver = new IntersectionObserver((items, observer) => {
@@ -38,7 +45,11 @@ class SearchResult {
   });
 
   render() {
-    console.log(this.data);
+    if (this.data === null || this.data.length === 0) {
+      this.$searchResult.style.display = 'none';
+      return;
+    }
+    this.$searchResult.style.display = 'grid';
     this.$searchResult.innerHTML = this.data
       .map(
         (cat, i) => `

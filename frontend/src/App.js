@@ -30,7 +30,7 @@ class App {
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
           this.setState({
-            items: data? data: [],
+            items: data,
             page: this.DEFAULT_PAGE
           });
           this.saveResult(data);
@@ -51,7 +51,7 @@ class App {
 
     this.searchResult = new SearchResult({
       $target,
-      initialData: this.data,
+      initialData: this.data.items,
       onClick: cat => {
         this.imageInfo.showDetail({
           visible: true,
@@ -61,10 +61,10 @@ class App {
       onNextPage: () => {
         this.Loading.show();
          
-        const lastKeyword = localStorage.getItem('history') === null? '': localStorage.getItem('history').split(',')[0];
+        const lastKeyword = localStorage.getItem('history') === null? [] : localStorage.getItem('history').split(',')[0];
         const page = this.page + 1;
         api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
-          let newData = this.data.concat(data);
+          let newData = this.data.items.concat(data);
           this.setState({
             items: newData,
             page: page
