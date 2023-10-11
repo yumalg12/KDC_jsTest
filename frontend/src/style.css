@@ -5,6 +5,22 @@
   font-style: normal;
 }
 
+/* dark mode 처리 */
+:root[color-mode="light"]{
+  --background: white;
+  --textColor: #000;
+}
+
+:root[color-mode="dark"]{
+  --background: #000;
+  --textColor: white;
+}
+
+body{
+  background-color: var(--background);
+  color: var(--textColor);
+}
+
 html {
   box-sizing: border-box;
 }
@@ -30,12 +46,14 @@ body * {
   display: grid;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
   grid-gap: 10px;
+  padding: 0;
 }
 
 .SearchResult img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  min-height: 300px;
 }
 
 .SearchResult .item {
@@ -43,12 +61,71 @@ body * {
   display: inline-block;
   margin: 0 0 1em;
   width: 100%;
+  position: relative;
+}
+
+.SearchResult .item .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background: rgba(0,0,0,.3);
+  padding: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+  transition: all 1s ease;
+  word-break: keep-all;
+}
+
+.SearchResult .item:hover .content {
+  opacity: 1;
 }
 
 .SearchInput {
   width: 100%;
   font-size: 40px;
   padding: 10px 15px;
+}
+
+/* 랜덤 버튼 */
+.SearchInputSection {
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
+  gap: 5px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.SearchInputSection .KeywordHistoryWrapper {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: var(--background);
+  box-shadow: 0 15px 15px -7px #00000050;
+  top: 100%;
+  padding: 1rem;
+  border: 1px solid var(--textColor);
+  border-top: none;
+  z-index: 2;
+}
+
+.SearchInputSection:hover .KeywordHistoryWrapper{
+  display: block;
+}
+
+.SearchInputSection .limitCount {
+  font-size: 40px;
+}
+
+.RandomButton {
+  cursor: pointer;
+}
+
+.RandomButton:hover{
+  filter: opacity(0.9);
 }
 
 .ImageInfo {
@@ -58,8 +135,21 @@ body * {
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease;
 }
 
+.ImageInfo.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* 모달 */
+.close{
+  cursor: pointer;
+}
 .ImageInfo .title {
   display: flex;
   justify-content: space-between;
@@ -75,7 +165,7 @@ body * {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
+  background-color: var(--background);
   border: 1px solid #eee;
   border-radius: 5px;
 }
@@ -84,11 +174,169 @@ body * {
   width: 100%;
 }
 
-/* dark mode 처리
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000;
-    color: white;
+/* 반응형 처리 */
+@media screen and (max-width: 992px){
+  .SearchResult {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
   }
 }
-*?
+@media screen and (max-width: 768px){
+  .SearchResult {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+
+  .ImageInfo .content-wrapper {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 576px){
+  .SearchResult {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* dark mode 토글 */
+.DarkModeToggle::before {
+  content: "Dark Mode";
+  color: var(--textColor);
+  margin-left: -5rem;
+  font-size: 1.2rem;
+  position: relative;
+  bottom: 0.1rem;
+}
+
+input[type="checkbox"].DarkModeToggle {
+  height: 2em;
+  appearance: none;
+  background-repeat: no-repeat;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  width: 3.6em;
+  margin-left: 5rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(0, 0, 0, 0.25)'/%3e%3c/svg%3e");
+  border-radius: 2em;
+  transition: background-position .15s ease-in-out;
+}
+
+input[type="checkbox"]:checked.DarkModeToggle {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23000'/%3e%3c/svg%3e");
+    background-color: rgba(255, 255, 255, 0.75);
+    border-color: rgba(255, 255, 255, 0.75);
+    background-position: right center;
+}
+
+/* 로딩창 */
+.Loading{
+  background-color: var(--textColor);
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  filter: opacity(0.6);
+  }
+  
+  .Loading p {
+  font-size: 3rem;
+  font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  color: white;
+  animation: 5s linear 0s infinite loadingcolor;
+}
+
+@keyframes loadingcolor {
+  0% {color: white;}
+  33%{color: black;}
+  66%{color: white;}
+}
+
+.Empty {
+  width: 100%;
+  color: var(--textColor);
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;  
+  margin: 25% 0;
+}
+
+/* 최근 검색어 */
+.KeywordHistoryWrapper label {
+  font-size: 1.2rem;
+  margin: 0 10px 0 5px;
+  font-weight: bold;
+}
+ul.keywordHistory{
+  margin: 0;
+  display: inline-flex;
+  gap: 5px;
+  list-style: none;
+  padding: 0;
+}
+
+.keywordHistory li>button {
+  padding: 5px 10px;
+  border: 1px solid rgb(150 150 150 / 70%);
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.keywordHistory li>button:hover {
+  filter: opacity(80%);
+}
+
+/* 배너 부분 */
+.Banner {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.Banner ul {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transition: all .3s ease;
+}
+
+.Banner ul li {
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 300px;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.Banner button {
+  position: absolute;
+  top: 45%;
+  z-index: 1;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-size: 1.5rem;
+  filter: opacity(0.8);
+  color: white;
+  cursor: pointer;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.Banner button:hover {
+  filter: opacity(1.0);
+}
+
+.Banner .prev {
+  left: 10px;
+}
+
+.Banner .next {
+  right: 10px;
+}

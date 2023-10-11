@@ -24,7 +24,7 @@ const catNames = {
   Cyprus: "키프로스 고양이",
   "Devon Rex": "데본렉스",
   Donskoy: "돈스코이",
-  "Dragon Li": "드레곤리",
+  "Dragon Li": "드래곤리",
   "Egyptian Mau": "이집션 마우",
   "European Burmese": "유러피안 버마 고양이",
   "Exotic Shorthair": "엑조틱 숏헤어",

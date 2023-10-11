@@ -1,3 +1,6 @@
+import Loading from './Loading.js';
+import api from './api.js';
+
 class ImageInfo {
   $imageInfo = null;
   data = null;
@@ -9,6 +12,7 @@ class ImageInfo {
     $target.appendChild($imageInfo);
 
     this.data = data;
+    this.Loading = new Loading({ $target });
 
     this.render();
   }
@@ -16,11 +20,40 @@ class ImageInfo {
   setState(nextData) {
     this.data = nextData;
     this.render();
+    this.setFade(nextData.visible);
+  }
+
+  setFade(visible) {
+    if (visible) {
+      this.$imageInfo.classList.add('show');
+    } else {
+      this.$imageInfo.classList.remove('show');
+    }
+  }
+
+  async showDetail(data) {
+    this.Loading.show();
+    const detailInfo = await api.fetchCatDetail(data.cat.id);
+
+    if (detailInfo) {
+      this.setState({
+        visible: true,
+        cat: detailInfo.data
+      });
+      this.Loading.hide();
+    }
+  }
+
+  closeImageInfo() {
+    this.setState({
+      visible: false,
+      cat: undefined, //초기화한다는 의미
+    })
   }
 
   render() {
     if (this.data.visible) {
-      const { name, url, temperament, origin } = this.data.image;
+      const { name, url, temperament, origin } = this.data.cat;
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
@@ -34,9 +67,19 @@ class ImageInfo {
             <div>태생: ${origin}</div>
           </div>
         </div>`;
-      this.$imageInfo.style.display = "block";
-    } else {
-      this.$imageInfo.style.display = "none";
+
+      this.$imageInfo.addEventListener('click', e=>{
+        if (e.target.className === 'ImageInfo' || e.target.className === 'close'){
+          this.closeImageInfo();
+        }
+      })
+      document.addEventListener('keyup', e=>{
+        if (e.key === "Escape") {
+          this.closeImageInfo();
+        }
+      })
     }
   }
 }
+
+export default ImageInfo;
